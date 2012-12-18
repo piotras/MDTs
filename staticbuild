@@ -1,0 +1,30 @@
+#! /bin/sh
+
+#ls static/
+#dbus-glib-0.98                         glib2.0_2.32.1-0ubuntu2.dsc    libxml2-2.7.8.dfsg                     midgardstatic.a
+#dbus-glib_0.98-1ubuntu1.debian.tar.gz  glib2.0_2.32.1.orig.tar.xz     libxml2_2.7.8.dfsg-5.1ubuntu4.diff.gz  prog
+#dbus-glib_0.98-1ubuntu1.dsc            libgda5-5.0.3                  libxml2_2.7.8.dfsg-5.1ubuntu4.dsc      prog.c
+#dbus-glib_0.98.orig.tar.gz             libgda5_5.0.3-1.debian.tar.gz  libxml2_2.7.8.dfsg.orig.tar.gz         staticbuild
+#glib2.0-2.32.1                         libgda5_5.0.3-1.dsc            midgard-core
+#glib2.0_2.32.1-0ubuntu2.debian.tar.gz  libgda5_5.0.3.orig.tar.xz      midgard-php5
+
+INCLUDES="-I/usr/include/midgard2/midgard -I/usr/include/glib-2.0 -I/usr/lib/i386-linux-gnu/glib-2.0/include -I/usr/include/libxml2 -I/usr/include/dbus-1.0 -I/usr/lib/i386-linux-gnu/dbus-1.0/include"
+
+LIBS="-lmidgard2 -lgobject-2.0 -lglib-2.0 -lgda-5.0 -ldbus-1 -ldbus-glib-1 -lgio-2.0"
+
+DYNAMIC_LIBS=" -lrt -lz -ldl -lm -lpthread -lffi -lresolv "
+
+STATIC_GLIB=" glib2.0-2.32.1/gthread/.libs/libgthread-2.0.a glib2.0-2.32.1/gmodule/.libs/libgmodule-2.0.a glib2.0-2.32.1/gio/.libs/libgio-2.0.a ./glib2.0-2.32.1/gobject/.libs/libgobject-2.0.a ./glib2.0-2.32.1/glib/.libs/libglib-2.0.a "
+STATIC_GLIB_DIR=" -L./glib2.0-2.32.1/glib/.libs "
+
+STATIC_GDA=" libgda5-5.0.3/libgda/.libs/libgda-5.0.a "
+
+STATIC_XML=" libxml2-2.7.8.dfsg/.libs/libxml2.a "
+
+STATIC_MIDGARD=" midgard-core/src/.libs/libmidgard2.a "
+
+STATIC_LIBS=" $STATIC_MIDGARD $STATIC_GDA $STATIC_XML $STATIC_GLIB "
+STATIC_LIBS_DIR=" $STATIC_GLIB_DIR "
+
+gcc $INCLUDES -L. -o prog prog.c $STATIC_LIBS $DYNAMIC_LIBS
+
