@@ -52,5 +52,24 @@ tar -xvf $LIBGDA_PKG
 cd $LIBGDA 
 export PATH=$PATH:/app/intltool/bin:/app/gettext/bin
 ./configure --prefix=$PREFIX --without-postgres  --without-mysql --without-libsoup --without-bdb  --without-oracle  --without-ldap --without-firebird --without-mdb --without-java --without-gnome-keyring --without-ui --enable-system-sqlite --disable-crypto --disable-gtk-doc
+make 
+make install
+cd -
+export PATH=$PATH:$PREFIX/bin
+
+# TODO Create tarball from built binaries and upload it to S3
+
+# Build midgard2-core
+echo "Installing midgard2-core"
+PREFIX=$HOME/midgard2
+MIDGARD2=midgard2-core-10.05.7.1
+MIDGARD2_PKG=$MIDGARD2.tar.gz
+curl -L -O https://github.com/downloads/midgardproject/midgard-core/$MIDGARD2_PKG
+tar -xzvf $MIDGARD2_PKG
+cd $MIDGARD2
+export PKG_CONFIG_LIBDIR=/usr/lib/pkgconfig:$HOME/libgda/lib/pkgconfig
+./configure --prefix=$PREFIX --with-dbus-support=no
+make
+make install
 
 # TODO Create tarball from built binaries and upload it to S3
