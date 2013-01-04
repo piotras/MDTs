@@ -43,6 +43,14 @@ export PATH=$PATH:$PREFIX/bin
 # TODO Create tarball from built binaries and upload it to S3
 
 # Build libgda
+echo "Installing libgda"
+PREFIX=$HOME/libgda
+LIBGDA=libgda-4.2.12
+LIBGDA_PKG=$LIBGDA.tar.xz
+curl -L -O http://ftp.gnome.org/pub/GNOME/sources/libgda/4.2/$LIBGDA_PKG
+tar -xvf $LIBGDA_PKG
+cd $LIBGDA 
+export PATH=$PATH:/app/intltool/bin:/app/gettext/bin
+./configure --prefix=$PREFIX --without-postgres  --without-mysql --without-libsoup --without-bdb  --without-oracle  --without-ldap --without-firebird --without-mdb --without-java --without-gnome-keyring --without-ui --enable-system-sqlite --disable-crypto --disable-gtk-doc
 
-
-
+# TODO Create tarball from built binaries and upload it to S3
