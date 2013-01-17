@@ -5,7 +5,6 @@
 #
 # https://github.com/iphoting/heroku-buildpack-php-tyler
 
-
 set -e
 
 # "Install" perl buildpack
@@ -80,6 +79,16 @@ make install
 
 # TODO Create tarball from built binaries and upload it to S3
 
+# Build PHP5
+curl -L http://pl1.php.net/get/php-5.4.8.tar.gz/from/this/mirror -o php-5.4.8.tar.gz
+tar -xzf php-5.4.8.tar.gz
+cd php-5.4.8
+./configure --without-pear --prefix=/app/vendor/php
+make ; make install
+
+# TODO Create tarball from built binaries and upload it to S3
+
+
 # Build php5-midgard2 extension
 echo "Installing php5-midgard2"
 PHP5_MIDGARD2=midgard-php5-10.05.7
@@ -97,3 +106,21 @@ make install
 # Installing shared extensions:     /app/vendor/php/lib/php/extensions/no-debug-non-zts-20100525/
 
 # TODO Create tarball from built binaries and upload it to S3
+
+
+# Build pcre
+curl -L-O ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-8.32.tar.gz
+tar -xzvf pcre-8.32.tar.gz
+cd pcre-8.32
+./configure --prefix=/app/vendor/pcre
+make; make install
+
+# TODO Create tarball from built binaries and upload it to S3
+
+# Build lighttpd
+curl -O http://download.lighttpd.net/lighttpd/releases-1.4.x/lighttpd-1.4.32.tar.gz
+tar -xzvf lighttpd-1.4.32.tar.gz 
+cd lighttpd-1.4.32
+export PATH=$PATH:/app/vendor/pcre/bin
+./configure --prefix=/app/vendor/lighttpd --with-pcre=/app/vendor/pcre/bin/pcre-config
+make ; make install
