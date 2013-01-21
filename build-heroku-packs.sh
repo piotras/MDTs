@@ -13,7 +13,7 @@ curl -L -O https://raw.github.com/miyagawa/heroku-buildpack-perl/master/bin/comp
 chmod +x ./compile
 export BUILD_DIR=/app
 export PATH=$PATH:$BUILD_DIR/local/bin:/usr/local/bin:/usr/bin:/bin
-./compile $BUILD_DIR
+./compile $BUILD_DIR $BUILD_DIR/cache
 
 # Build perl's XML::Parser 
 echo "Installing XML::Parser module"
