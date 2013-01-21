@@ -56,7 +56,7 @@ curl -L -O http://ftp.gnome.org/pub/GNOME/sources/libgda/4.2/$LIBGDA_PKG
 tar -xvf $LIBGDA_PKG
 cd $LIBGDA 
 export PATH=$PATH:/app/intltool/bin:/app/gettext/bin
-./configure --prefix=$PREFIX --without-postgres  --without-mysql --without-libsoup --without-bdb  --without-oracle  --without-ldap --without-firebird --without-mdb --without-java --without-gnome-keyring --without-ui --enable-system-sqlite --disable-crypto --disable-gtk-doc
+./configure --prefix=$PREFIX --without-mysql --without-libsoup --without-bdb  --without-oracle  --without-ldap --without-firebird --without-mdb --without-java --without-gnome-keyring --without-ui --enable-system-sqlite --disable-crypto --disable-gtk-doc
 make 
 make install
 cd -
